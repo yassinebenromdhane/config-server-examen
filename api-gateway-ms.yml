@@ -15,9 +15,9 @@ spring:
                 - id: gestion-formateurs-ms
                   uri: lb://gestion-formateurs-ms
                   predicates:
-                      - Path=/utilisateur/**
+                      - Path=/formateurs/**
                   filters:
-                      - RewritePath=/utilisateur/(?<path>.*), /$\{path}
+                      - RewritePath=/formateurs/(?<path>.*), /$\{path}
                 - id: gestion-cours-ms
                   uri: lb://gestion-cours-ms
                   predicates:
