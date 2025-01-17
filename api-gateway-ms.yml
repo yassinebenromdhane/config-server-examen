@@ -1,0 +1,35 @@
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:6001/eureka/
+        fetch-registry: true
+        register-with-eureka: true
+
+spring:
+    cloud:
+        gateway:
+          discovery.locator:
+            enabled: true
+            lowerCaseServiceId: true
+          routes:
+                - id: gestion-formateurs-ms
+                  uri: lb://gestion-formateurs-ms
+                  predicates:
+                      - Path=/utilisateur/**
+                  filters:
+                      - RewritePath=/utilisateur/(?<path>.*), /$\{path}
+                - id: gestion-cours-ms
+                  uri: lb://gestion-cours-ms
+                  predicates:
+                      - Path=/cours/**
+                  filters:
+                      - RewritePath=/cours/(?<path>.*), /$\{path}
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
